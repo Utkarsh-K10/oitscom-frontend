@@ -1,9 +1,10 @@
+import axios from "axios";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import UserReducer from "../../reducers/UserReducer";
 
 const initialState = {
   isLoading: false,
-  admin: [],
+  admin: {},
   isAdminPresent: false,
 };
 
@@ -13,10 +14,15 @@ const UserContext = createContext({});
 export const UserProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(UserReducer, initialState);
 
-  const fetchUser = async () => {
-    const response = await fetch(`${baseUrl}/admin`);
-    const data = await response.json();
-    dispatch({ type: "FETCHUSER", payload: data });
+  const handleLogin = async (values: any) => {
+    try {
+      const { data } = await axios.post(`${baseUrl}/admin/login`, {
+        ...values,
+      });
+      dispatch({ type: "ADMINLOGIN", payload: data });
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   useEffect(() => {
@@ -24,7 +30,9 @@ export const UserProvider = ({ children }: any) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ ...state }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ ...state, handleLogin }}>
+      {children}
+    </UserContext.Provider>
   );
 };
 

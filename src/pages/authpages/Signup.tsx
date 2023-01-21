@@ -4,10 +4,8 @@ import { Formik, Field, ErrorMessage, Form } from "formik";
 import { Button, FormHelperText, TextField, Typography } from "@mui/material";
 
 const Signup = () => {
-  const { admin }: any = useUser();
-
+  const { admin, handleLogin }: any = useUser();
   console.log({ admin });
-
   const initialValues = { email: "", password: "" };
 
   const validate = (values: any) => {
@@ -23,11 +21,9 @@ const Signup = () => {
     return errors;
   };
 
-  const submit = async (values: any, setSubmitting: any) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
+  const submit = async (values: any, setSubmitting: boolean | any) => {
+    handleLogin({ ...values });
+    setSubmitting(false);
   };
 
   return (

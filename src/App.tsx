@@ -1,12 +1,25 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Layout from "./Layout";
 import Dashboard from "./pages/Dashboard";
 import Product from "./pages/Product";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Signup from "./pages/authpages/Signup";
+import { useUser } from "./context/user/UserProvider";
 
 function App() {
-  const [isUserPresent, setIsUserPresent] = useState(false);
+  const { isAdminPresent }: any = useUser();
+  const [isUserPresent, setIsUserPresent] = useState(isAdminPresent);
+  const localStorageItems = () => {
+    const getAdminFromLocal: any = localStorage.getItem("admin");
+    const localvalue = JSON.parse(getAdminFromLocal);
+    if (localvalue) {
+      setIsUserPresent(localvalue[1].isLoggedInAdmin);
+    }
+  };
+
+  useEffect(() => {
+    localStorageItems();
+  }, [isAdminPresent]);
   return (
     <BrowserRouter>
       <div
