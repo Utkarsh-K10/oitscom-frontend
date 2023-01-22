@@ -58,7 +58,11 @@ const Category = () => {
           <Button onClick={handleClose}>Subscribe</Button>
         </DialogActions>
       </Dialog>
-      <TableComponent />
+      <TableComponent
+        title="Category Table For Product"
+        rows={[]}
+        headcells={[]}
+      />
     </div>
   );
 };
