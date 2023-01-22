@@ -3,9 +3,43 @@ import { useState } from "react";
 import TableComponent from "../components/TableComponent";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import CreateCategory from "../components/CreateCategory";
+import { downloadCSV } from "../utils/utilService";
 
 const Category = () => {
   const [showCategoryForm, setShowCategoryForm] = useState(false);
+
+  const handleDownloadCSV = () => {
+    const data = [
+      {
+        id: "sno",
+        numeric: false,
+        disablePadding: false,
+        label: "S no",
+      },
+      {
+        id: "firstName",
+        numeric: false,
+        disablePadding: false,
+        label: "First Name",
+      },
+      {
+        id: "lastName",
+        numeric: false,
+        disablePadding: false,
+        label: "Last Name",
+      },
+      { id: "age", numeric: false, disablePadding: false, label: "Age" },
+    ];
+    const exportData = data?.map((item: any) => {
+      return {
+        id: item.id,
+        numeric: item.numeric,
+        disablePadding: item.disablePadding,
+        label: item.label,
+      };
+    });
+    downloadCSV(exportData, "data.csv");
+  };
 
   return (
     <>
@@ -19,7 +53,11 @@ const Category = () => {
       >
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Box sx={{ mr: 2 }}>
-            <Button variant="outlined" startIcon={<CloudDownloadIcon />}>
+            <Button
+              variant="outlined"
+              startIcon={<CloudDownloadIcon />}
+              onClick={handleDownloadCSV}
+            >
               Download
             </Button>
           </Box>
