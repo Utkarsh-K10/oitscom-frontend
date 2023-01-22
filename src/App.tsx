@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import Layout from "./Layout";
+import Layout from "./Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Product from "./pages/Product";
 import { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ function App() {
         {!isUserPresent ? (
           <Routes>
             <Route path="/" element={<Signup />} />
-            <Route path="/login" element={<Signup />} />
+            <Route path="/signin" element={<Signup />} />
           </Routes>
         ) : (
           <>

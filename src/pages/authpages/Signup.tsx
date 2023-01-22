@@ -2,10 +2,11 @@ import { useUser } from "../../context/user/UserProvider";
 import Grid from "@mui/material/Grid";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { Button, FormHelperText, TextField, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const { admin, handleLogin }: any = useUser();
-  console.log({ admin });
+  const navigate = useNavigate();
   const initialValues = { email: "", password: "" };
 
   const validate = (values: any) => {
@@ -24,6 +25,7 @@ const Signup = () => {
   const submit = async (values: any, setSubmitting: boolean | any) => {
     handleLogin({ ...values });
     setSubmitting(false);
+    navigate("/dashboard");
   };
 
   return (
@@ -45,7 +47,7 @@ const Signup = () => {
       >
         {({ isSubmitting, errors, touched }) => (
           <Form>
-            <Typography variant="h4">Admin Signup </Typography>
+            <Typography variant="h4">Admin Signin </Typography>
             <Grid item xs={4} md={12}>
               <Field
                 type="email"
@@ -81,7 +83,7 @@ const Signup = () => {
             </Grid>
             <Grid item xs={12} md={12} sx={{ m: 5 }}>
               <Button type="submit" disabled={isSubmitting} variant="contained">
-                Signup
+                Signin
               </Button>
             </Grid>
           </Form>
