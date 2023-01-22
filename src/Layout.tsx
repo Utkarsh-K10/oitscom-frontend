@@ -51,12 +51,14 @@ function Layout() {
                 Logout
               </Button>
             </Paper>
-            <SubMenu label="Charts">
+            {/* <SubMenu label="Charts">
               <MenuItem> Pie charts </MenuItem>
               <MenuItem> Line charts </MenuItem>
-            </SubMenu>
+            </SubMenu> */}
             <MenuItem routerLink={<Link to="/dashboard" />}>Dashboard</MenuItem>
             <MenuItem routerLink={<Link to="/products" />}> Product</MenuItem>
+            <MenuItem routerLink={<Link to="/category" />}> Category</MenuItem>
+
             <MenuItem> E-commerce</MenuItem>
           </Menu>
         </Sidebar>
