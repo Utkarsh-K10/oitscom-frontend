@@ -11,10 +11,11 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TextField,
   Typography,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 
@@ -103,11 +104,15 @@ const TableComponent = ({
   rows = [] as any,
   title = "",
   withPagination = true,
-  defaultRowPerPage = 5,
+  defaultRowPerPage = 10,
 }) => {
   const headers: any = rows.length > 0 && Object.keys(rows[0]);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(defaultRowPerPage);
+  const [filterRow, setFilterRow] = useState([]);
   const [page, setPage] = React.useState(0);
+  if (filterRow.length) {
+    rows = filterRow;
+  }
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -122,24 +127,48 @@ const TableComponent = ({
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   return (
-    <Box sx={{ width: 1 }}>
+    <Box sx={{ width: 1, m: 2 }}>
       <Paper sx={{ width: 1 }}>
-        {title && (
-          <Typography
-            sx={{
-              m: "15px",
-              color: "text.secondary",
-              textDecoration: "underline",
-              lineHeight: "25px",
-              letterSpacing: "0.18px",
-            }}
-            variant="h6"
-          >
-            {title}
-          </Typography>
-        )}
+        <Box sx={{ p: 1 }}>
+          {title && (
+            <Typography
+              sx={{
+                m: "15px",
+                color: "text.secondary",
+                textDecoration: "underline",
+                lineHeight: "25px",
+                letterSpacing: "0.18px",
+              }}
+              variant="h6"
+            >
+              {title}
+            </Typography>
+          )}
+        </Box>
+        <Box sx={{ m: 2 }}>
+          <form action="">
+            <TextField
+              id="filled-search"
+              label="Search"
+              type="search"
+              variant="standard"
+              onChange={(e: any) => {
+                const { value } = e.target;
+                if (value.length) {
+                  const output = rows.filter((item: any) =>
+                    item.name
+                      .toLowerCase()
+                      .includes(e.target.value.toLowerCase())
+                  );
+                  setFilterRow(output);
+                } else {
+                  setFilterRow([]);
+                }
+              }}
+            />
+          </form>
+        </Box>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <TableHead sx={{ background: "#2980b9" }}>
