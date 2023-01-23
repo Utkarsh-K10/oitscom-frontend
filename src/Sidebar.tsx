@@ -57,9 +57,11 @@ function Layout() {
                 src="https://www.w3schools.com/howto/img_avatar.png"
                 height="80"
                 style={{ borderRadius: "50%" }}
-                alt=""
+                alt="admin"
               />
-              <Typography style={{ color: "teal" }}>{admin?.email}</Typography>
+              <Typography style={{ color: "teal", marginTop: "15px" }}>
+                {admin?.email}
+              </Typography>
               <Button
                 onClick={() => {
                   localStorage.removeItem("admin");

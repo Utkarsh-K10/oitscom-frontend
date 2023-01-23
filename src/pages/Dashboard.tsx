@@ -42,7 +42,7 @@ export const data = {
   labels,
   datasets: [
     {
-      data: [0, 10, 20, 30, 40, 50],
+      data: [12, 30, 20, 15, 39, 26],
       backgroundColor: ["#003f5c", "#58508d", "#bc5090", "#ff6361", "#ffa600"],
     },
   ],
@@ -93,7 +93,9 @@ export default function Dashboard() {
   return (
     <div className={classes.wrapper}>
       <Box>
-        <Typography variant="h5">Dashboard</Typography>
+        <Typography sx={{ color: "info.main" }} variant="h5">
+          Dashboard
+        </Typography>
       </Box>
       <div className={classes.innerWrapper}>
         <Bar options={options} data={data} />;
