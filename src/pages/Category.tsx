@@ -9,6 +9,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { makeStyles } from "@mui/styles";
 import ConfirmationDialog from "../components/ConfirmationDialog";
+import { useCategory } from "../context/category/CategoryProvider";
 
 const useStyles: any = makeStyles({
   buttons: {
