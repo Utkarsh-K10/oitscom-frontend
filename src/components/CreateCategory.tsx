@@ -10,8 +10,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Formik, Field, Form } from "formik";
+import { useUser } from "../context/user/UserProvider";
 
 const CreateCategory = ({ closeDialog }: any) => {
+  const { handleCreateCategory }: any = useUser();
   const initialValues = { name: "" };
 
   const validate = (values: any) => {
@@ -24,6 +26,7 @@ const CreateCategory = ({ closeDialog }: any) => {
 
   const submit = async (values: any, setSubmitting: boolean | any) => {
     console.log({ values });
+    handleCreateCategory(values);
     setSubmitting(false);
     return closeDialog();
   };

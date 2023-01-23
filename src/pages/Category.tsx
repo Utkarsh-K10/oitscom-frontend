@@ -1,44 +1,89 @@
-import { Button, Box } from "@mui/material";
+import { Button, Box, Snackbar } from "@mui/material";
 import { useState } from "react";
 import TableComponent from "../components/TableComponent";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import CreateCategory from "../components/CreateCategory";
 import { downloadCSV } from "../utils/utilService";
+import { useUser } from "../context/user/UserProvider";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { makeStyles } from "@mui/styles";
+import ConfirmationDialog from "../components/ConfirmationDialog";
+
+const useStyles: any = makeStyles({
+  buttons: {
+    "&:hover": {
+      cursor: "pointer",
+    },
+  },
+});
 
 const Category = () => {
   const [showCategoryForm, setShowCategoryForm] = useState(false);
+  const { categories, handleDeleteCategory }: any = useUser();
+  const [showConfirmation, setShowConfirmation]: any = useState(false);
+  const [selectedData, setSelectedData] = useState({});
+  const classes = useStyles();
 
-  const handleDownloadCSV = () => {
-    const data = [
-      {
-        id: "sno",
-        numeric: false,
-        disablePadding: false,
-        label: "S no",
-      },
-      {
-        id: "firstName",
-        numeric: false,
-        disablePadding: false,
-        label: "First Name",
-      },
-      {
-        id: "lastName",
-        numeric: false,
-        disablePadding: false,
-        label: "Last Name",
-      },
-      { id: "age", numeric: false, disablePadding: false, label: "Age" },
-    ];
-    const exportData = data?.map((item: any) => {
+  const CATEGORY_TABLE_HEAD = [
+    {
+      id: "name",
+      numeric: false,
+      disablePadding: false,
+      label: "Category name",
+    },
+    {
+      id: "edit",
+      numeric: false,
+      disablePadding: false,
+      label: "Enhance",
+    },
+    {
+      id: "delete",
+      numeric: false,
+      disablePadding: false,
+      label: "Remove",
+    },
+  ];
+
+  const categoryList = () => {
+    return categories?.map((category: any) => {
       return {
-        id: item.id,
-        numeric: item.numeric,
-        disablePadding: item.disablePadding,
-        label: item.label,
+        name: category.name,
+        edit: (
+          <Box
+            sx={{ color: "text.secondary" }}
+            onClick={() => {
+              setShowCategoryForm(true);
+              setSelectedData(category);
+            }}
+          >
+            <EditIcon className={classes.buttons} />
+          </Box>
+        ),
+        delete: (
+          <Box
+            sx={{ color: "text.secondary" }}
+            onClick={() => {
+              setShowConfirmation(true);
+              setSelectedData(category);
+            }}
+          >
+            <DeleteIcon className={classes.buttons} />
+          </Box>
+        ),
       };
     });
-    downloadCSV(exportData, "data.csv");
+  };
+
+  const handleDownloadCSV = () => {
+    const exportData = categories?.map((item: any) => {
+      return {
+        id: item.id,
+        name: item.name,
+      };
+    });
+    downloadCSV(exportData, "categories.csv");
   };
 
   return (
@@ -67,12 +112,21 @@ const Category = () => {
         </Box>
         <TableComponent
           title="Category Table For Product"
-          rows={[]}
-          headcells={[]}
+          headcells={CATEGORY_TABLE_HEAD}
+          rows={categoryList()}
         />
       </div>
       {showCategoryForm && (
-        <CreateCategory closeDialog={() => setShowCategoryForm(false)} />
+        <CreateCategory
+          closeDialog={() => setShowCategoryForm(false)}
+          detail={selectedData}
+        />
+      )}
+      {showConfirmation && (
+        <ConfirmationDialog
+          closeDialog={() => setShowConfirmation(false)}
+          category={selectedData}
+        />
       )}
     </>
   );

@@ -119,14 +119,14 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 //   { id: "age", numeric: false, disablePadding: false, label: "Age" },
 
 const TableComponent = ({
-  headcells = [],
-  rows = [],
+  headcells = [] as any,
+  rows = [] as any,
   title = "",
   withPagination = true,
   defaultRowPerPage = 5,
 }) => {
   const headers: any = rows.length > 0 && Object.keys(rows[0]);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
 
   const handleChangePage = (
