@@ -20,8 +20,12 @@ const ConfirmationDialog = ({ closeDialog, category }: any) => {
       <DialogTitle id="alert-dialog-title">Please Confirm</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to Delete{" "}
-          {<Typography sx={{ fontWeight: "bold" }}>{category.name}</Typography>}
+          {
+            <>
+              Are you sure you want to Delete{" "}
+              <span style={{ fontWeight: "bold" }}>{category.name}</span>{" "}
+            </>
+          }
         </DialogContentText>
       </DialogContent>
       <DialogActions>

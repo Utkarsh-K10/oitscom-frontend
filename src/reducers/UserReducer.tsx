@@ -1,4 +1,8 @@
-import { CREATE_CATEGORY, SET_CATEGORIES } from "../actions/Category.Actions";
+import {
+  CREATE_CATEGORY,
+  DELETE_CATEGORY,
+  SET_CATEGORIES,
+} from "../actions/Category.Actions";
 import { ADMINLOGIN } from "../constants/admin.contants";
 
 function UserReducer(state: any, action: any) {
@@ -14,6 +18,11 @@ function UserReducer(state: any, action: any) {
       return { ...state, categories: action.payload };
     case CREATE_CATEGORY:
       return { ...state, categories: [...state.categories, action.payload] };
+    case DELETE_CATEGORY:
+      const tempCategory = state.categories.filter(
+        (category: any) => category.id !== action.payload
+      );
+      return { ...state, categories: tempCategory };
     default:
       return state;
   }

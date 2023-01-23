@@ -6,18 +6,16 @@ import {
   DialogActions,
   Button,
   FormHelperText,
-  Grid,
-  Typography,
 } from "@mui/material";
-import { Formik, Field, Form } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useUser } from "../context/user/UserProvider";
 
-const CreateCategory = ({ closeDialog }: any) => {
-  const { handleCreateCategory }: any = useUser();
-  const initialValues = { name: "" };
+const CreateCategory = ({ closeDialog, detail }: any) => {
+  const { handleCreateCategory, handleUpdateCategory }: any = useUser();
+  const initialValues = { name: detail.name || "" };
 
   const validate = (values: any) => {
-    const errors = {} as any;
+    const errors: any = {};
     if (!values.name) {
       errors.name = "Required";
     }
@@ -25,15 +23,21 @@ const CreateCategory = ({ closeDialog }: any) => {
   };
 
   const submit = async (values: any, setSubmitting: boolean | any) => {
-    console.log({ values });
-    handleCreateCategory(values);
+    if (detail.id) {
+      handleUpdateCategory(detail.id, values);
+    } else {
+      handleCreateCategory(values);
+    }
     setSubmitting(false);
     return closeDialog();
   };
+
   return (
     <div>
       <Dialog open={true}>
-        <DialogTitle>Create Category</DialogTitle>
+        <DialogTitle>
+          {detail.id ? "Edit Category" : " Create Category"}
+        </DialogTitle>
         <Formik
           validateOnChange={false}
           validateOnBlur={false}
@@ -58,7 +62,7 @@ const CreateCategory = ({ closeDialog }: any) => {
                   />
                   {errors && touched && (
                     <FormHelperText style={{ color: "red" }}>
-                      {errors?.name}
+                      <ErrorMessage name="name" component="div" />
                     </FormHelperText>
                   )}
                 </Form>
@@ -66,7 +70,7 @@ const CreateCategory = ({ closeDialog }: any) => {
               <DialogActions>
                 <Button onClick={closeDialog}>Cancel</Button>
                 <Button disabled={isSubmitting} onClick={submitForm}>
-                  Create
+                  {detail.id ? "Enhance" : "Create"}
                 </Button>
               </DialogActions>
             </>

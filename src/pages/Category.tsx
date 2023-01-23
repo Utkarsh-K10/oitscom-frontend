@@ -23,6 +23,7 @@ const Category = () => {
   const { categories, handleDeleteCategory }: any = useUser();
   const [showConfirmation, setShowConfirmation]: any = useState(false);
   const [selectedData, setSelectedData] = useState({});
+  const [isEdit, setIsEdit] = useState(false);
   const classes = useStyles();
 
   const CATEGORY_TABLE_HEAD = [
@@ -56,6 +57,7 @@ const Category = () => {
             onClick={() => {
               setShowCategoryForm(true);
               setSelectedData(category);
+              setIsEdit(true);
             }}
           >
             <EditIcon className={classes.buttons} />
@@ -106,7 +108,12 @@ const Category = () => {
               Download
             </Button>
           </Box>
-          <Button variant="contained" onClick={() => setShowCategoryForm(true)}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              setShowCategoryForm(true), setIsEdit(false);
+            }}
+          >
             Create Category
           </Button>
         </Box>
@@ -119,7 +126,7 @@ const Category = () => {
       {showCategoryForm && (
         <CreateCategory
           closeDialog={() => setShowCategoryForm(false)}
-          detail={selectedData}
+          detail={isEdit ? selectedData : {}}
         />
       )}
       {showConfirmation && (

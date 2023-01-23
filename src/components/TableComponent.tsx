@@ -98,26 +98,6 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-// Table headecel format {
-//     id: "sno",
-//     numeric: false,
-//     disablePadding: false,
-//     label: "S no",
-//   },
-//   {
-//     id: "firstName",
-//     numeric: false,
-//     disablePadding: false,
-//     label: "First Name",
-//   },
-//   {
-//     id: "lastName",
-//     numeric: false,
-//     disablePadding: false,
-//     label: "Last Name",
-//   },
-//   { id: "age", numeric: false, disablePadding: false, label: "Age" },
-
 const TableComponent = ({
   headcells = [] as any,
   rows = [] as any,
@@ -188,15 +168,15 @@ const TableComponent = ({
                 )
                 .map((row: any) => (
                   <TableRow key={row.id}>
-                    {headers?.map((headcell: any) => (
-                      <TableCell>{row[headcell]}</TableCell>
+                    {headers?.map((headcell: any, index: number) => (
+                      <TableCell key={index}>{row[headcell]}</TableCell>
                     ))}
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </TableContainer>
-        <TableFooter sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end  " }}>
           {withPagination && (
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
@@ -215,7 +195,7 @@ const TableComponent = ({
               ActionsComponent={TablePaginationActions}
             />
           )}
-        </TableFooter>
+        </div>
       </Paper>
     </Box>
   );

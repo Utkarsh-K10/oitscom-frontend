@@ -2,6 +2,7 @@ import axios from "axios";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import {
   CREATE_CATEGORY,
+  DELETE_CATEGORY,
   SET_CATEGORIES,
 } from "../../actions/Category.Actions";
 import UserReducer from "../../reducers/UserReducer";
@@ -32,7 +33,7 @@ export const UserProvider = ({ children }: any) => {
 
   const handleCreateCategory = async (category: any) => {
     try {
-      console.log(category);
+      console.log("create", category);
       const { data } = await axios.post(`${baseUrl}/category`, category);
       dispatch({ type: CREATE_CATEGORY, payload: data });
     } catch (error) {
@@ -51,7 +52,21 @@ export const UserProvider = ({ children }: any) => {
 
   const handleDeleteCategory = async (id: number) => {
     try {
-      await axios.delete(`${baseUrl}/category/${id}`);
+      const { data } = await axios.delete(`${baseUrl}/category/${id}`);
+      if (data?.affected) {
+        dispatch({ type: DELETE_CATEGORY, payload: id });
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+  const handleUpdateCategory = async (id: number, detail: string) => {
+    try {
+      const { data } = await axios.patch(`${baseUrl}/category/${id}`, detail);
+      if (data?.affected) {
+        await fetchCategory();
+      }
     } catch (error) {
       console.log({ error });
     }
@@ -59,7 +74,7 @@ export const UserProvider = ({ children }: any) => {
 
   useEffect(() => {
     fetchCategory();
-  }, [handleDeleteCategory]);
+  }, []);
 
   return (
     <UserContext.Provider
@@ -68,6 +83,7 @@ export const UserProvider = ({ children }: any) => {
         handleLogin,
         handleCreateCategory,
         handleDeleteCategory,
+        handleUpdateCategory,
       }}
     >
       {children}
