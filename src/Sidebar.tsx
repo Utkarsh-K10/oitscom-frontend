@@ -14,6 +14,7 @@ import { useUser } from "./context/user/UserProvider";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import CategoryIcon from "@mui/icons-material/Category";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
+import ClassIcon from "@mui/icons-material/Class";
 
 function Layout() {
   const { collapseSidebar } = useProSidebar();
@@ -94,6 +95,14 @@ function Layout() {
                   <CategoryIcon />
                 </div>
                 <Typography>Category</Typography>
+              </Box>
+            </MenuItem>
+            <MenuItem routerLink={<Link to="/subcategory" />}>
+              <Box sx={{ display: "flex", justifyContent: "baseline" }}>
+                <div style={{ color: "#2980b9", marginRight: "5px" }}>
+                  <ClassIcon />
+                </div>
+                <Typography>Sub Category</Typography>
               </Box>
             </MenuItem>
           </Menu>

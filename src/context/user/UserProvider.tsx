@@ -5,6 +5,7 @@ import {
   DELETE_CATEGORY,
   SET_CATEGORIES,
 } from "../../actions/Category.Actions";
+import { API } from "../../constants/baseUrl";
 import UserReducer from "../../reducers/UserReducer";
 
 const initialState = {
@@ -14,7 +15,7 @@ const initialState = {
   categories: [],
 };
 
-const baseUrl = `http://localhost:3000`;
+const baseUrl = API;
 const UserContext = createContext({});
 
 export const UserProvider = ({ children }: any) => {

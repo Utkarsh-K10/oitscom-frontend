@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Signup from "./pages/authpages/Signup";
 import { useUser } from "./context/user/UserProvider";
 import Category from "./pages/Category";
+import SubCategory from "./pages/SubCategory";
 
 function App() {
   const { isAdminPresent }: any = useUser();
@@ -41,6 +42,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/products" element={<Product />} />
               <Route path="/category" element={<Category />} />
+              <Route path="/subcategory" element={<SubCategory />} />
             </Routes>
           </>
         )}
