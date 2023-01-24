@@ -3,23 +3,13 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import { useUser } from "../context/user/UserProvider";
 
 export default function SimpleSnackbar() {
-  const [open, setOpen] = React.useState(true);
+  const { open, dispatchCloaseSnackBar, message }: any = useUser();
 
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
+  const handleClose = () => {
+    dispatchCloaseSnackBar();
   };
 
   const action = (
@@ -38,10 +28,14 @@ export default function SimpleSnackbar() {
   return (
     <div>
       <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={handleClose}
-        message="Note archived"
+        message={message}
         action={action}
       />
     </div>

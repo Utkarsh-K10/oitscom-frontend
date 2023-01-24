@@ -11,10 +11,12 @@ import {
 } from "@mui/material";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useUser } from "../context/user/UserProvider";
+import { MESSAGES } from "../utils/messages";
 
 const CreateCategory = ({ closeDialog, detail }: any) => {
   const { handleCreateCategory, handleUpdateCategory }: any = useUser();
   const initialValues = { name: detail.name || "" };
+  const { dispatchSnackBar }: any = useUser();
 
   const validate = (values: any) => {
     const errors: any = {};
@@ -27,8 +29,10 @@ const CreateCategory = ({ closeDialog, detail }: any) => {
   const submit = async (values: any, setSubmitting: boolean | any) => {
     if (detail.id) {
       handleUpdateCategory(detail.id, values);
+      dispatchSnackBar(MESSAGES("Category").updated);
     } else {
       handleCreateCategory(values);
+      dispatchSnackBar(MESSAGES("Category").success);
     }
     setSubmitting(false);
     return closeDialog();
@@ -59,8 +63,8 @@ const CreateCategory = ({ closeDialog, detail }: any) => {
                         <Field
                           type="text"
                           name="name"
-                          component={TextField}
-                          variant="outlined"
+                          as={TextField}
+                          variant="standard"
                           label="Category"
                           required
                           id="name"

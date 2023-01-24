@@ -16,11 +16,12 @@ import {
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import { useCategory } from "../context/category/CategoryProvider";
 import { useUser } from "../context/user/UserProvider";
+import { MESSAGES } from "../utils/messages";
 
 const CreateSubCategory = ({ closeDialog, detail }: any) => {
   const { handleCreateSubCategory, handleUpdateSubCategory }: any =
     useCategory();
-  const { categories }: any = useUser();
+  const { categories, dispatchSnackBar }: any = useUser();
   const initialValues = {
     name: detail?.subCategory?.name || "",
     category: detail?.subCategory?.category?.id || "",
@@ -41,13 +42,16 @@ const CreateSubCategory = ({ closeDialog, detail }: any) => {
     try {
       if (detail?.subCategory?.id) {
         handleUpdateSubCategory(detail?.subCategory?.id, values);
+        dispatchSnackBar(MESSAGES("Subcategory").updated);
       } else {
         handleCreateSubCategory(values);
+        dispatchSnackBar(MESSAGES("Subcategory").success);
       }
       setSubmitting(false);
       return closeDialog();
     } catch (error) {
       console.log({ error });
+      dispatchSnackBar(MESSAGES("SubCategory").error);
     }
   };
 

@@ -10,6 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { makeStyles } from "@mui/styles";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import { useCategory } from "../context/category/CategoryProvider";
+import { MESSAGES } from "../utils/messages";
 
 const useStyles: any = makeStyles({
   buttons: {
@@ -26,6 +27,7 @@ const Category = () => {
   const [selectedData, setSelectedData]: any = useState({});
   const [isEdit, setIsEdit] = useState(false);
   const classes = useStyles();
+  const { dispatchSnackBar }: any = useUser();
 
   const CATEGORY_TABLE_HEAD = [
     {
@@ -87,6 +89,7 @@ const Category = () => {
       };
     });
     downloadCSV(exportData, "categories.csv");
+    dispatchSnackBar(MESSAGES("File").downlaod);
   };
 
   return (

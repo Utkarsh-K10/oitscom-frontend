@@ -5,9 +5,16 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-  Typography,
 } from "@mui/material";
-import { useUser } from "../context/user/UserProvider";
+
+interface ConfimationDialogProps {
+  closeDialog: () => {};
+  detail: string | any;
+  dialogtext: string;
+  confirmtext: string;
+  denytext: string;
+  onClose: (id: number) => {};
+}
 
 const ConfirmationDialog = ({
   closeDialog,
@@ -16,8 +23,7 @@ const ConfirmationDialog = ({
   confirmtext,
   denytext,
   onClose,
-}: any) => {
-  console.log({ detail });
+}: ConfimationDialogProps) => {
   return (
     <Dialog
       open={true}

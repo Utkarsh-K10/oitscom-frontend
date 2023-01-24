@@ -1,7 +1,9 @@
 import {
+  CLOSE_SNAKCBAR,
   CREATE_CATEGORY,
   DELETE_CATEGORY,
   SET_CATEGORIES,
+  SHOW_SNAKCBAR,
 } from "../actions/Category.Actions";
 import { ADMINLOGIN } from "../constants/admin.contants";
 
@@ -23,6 +25,10 @@ function UserReducer(state: any, action: any) {
         (category: any) => category.id !== action.payload
       );
       return { ...state, categories: tempCategory };
+    case SHOW_SNAKCBAR:
+      return { ...state, open: true, message: action.payload };
+    case CLOSE_SNAKCBAR:
+      return { ...state, open: false };
     default:
       return state;
   }

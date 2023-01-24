@@ -9,6 +9,9 @@ import { downloadCSV } from "../utils/utilService";
 import CreateSubCategory from "../components/CreateSubCategory";
 import { useState } from "react";
 import ConfirmationDialog from "../components/ConfirmationDialog";
+import SimpleSnackbar from "../components/Snackbar";
+import { MESSAGES } from "../utils/messages";
+import { useUser } from "../context/user/UserProvider";
 
 const useStyles: any = makeStyles({
   buttons: {
@@ -25,7 +28,8 @@ const SubCategory = () => {
   const [selectedData, setSelectedData]: any = useState({});
   const [isSelected, setIsSelected] = useState(false);
   const [showConfirmation, setShowConfirmation]: any = useState(false);
-  console.log({ selectedData });
+  const { dispatchSnackBar }: any = useUser();
+
   const SUB_CATEGORY_TABLE_HEAD = [
     {
       id: "sname",
@@ -89,10 +93,11 @@ const SubCategory = () => {
       return {
         id: subCategory?.id,
         s_name: subCategory?.name,
-        c_name: subCategory?.category.name,
+        c_name: subCategory?.category?.name,
       };
     });
     downloadCSV(exportData, "SubCategory.csv");
+    dispatchSnackBar(MESSAGES("File").downlaod);
   };
 
   return (
