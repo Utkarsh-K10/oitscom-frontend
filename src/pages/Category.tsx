@@ -1,4 +1,4 @@
-import { Button, Box, Snackbar } from "@mui/material";
+import { Button, Box, Snackbar, Typography } from "@mui/material";
 import { useState } from "react";
 import TableComponent from "../components/TableComponent";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
@@ -11,6 +11,7 @@ import { makeStyles } from "@mui/styles";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import { useCategory } from "../context/category/CategoryProvider";
 import { MESSAGES } from "../utils/messages";
+import Breadcrum from "../components/Breadcrum";
 
 const useStyles: any = makeStyles({
   buttons: {
@@ -102,6 +103,7 @@ const Category = () => {
           margin: "3%",
         }}
       >
+        <Breadcrum page="Category" />
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Box sx={{ mr: 2 }}>
             <Button

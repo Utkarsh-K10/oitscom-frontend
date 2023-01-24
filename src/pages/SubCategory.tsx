@@ -12,6 +12,7 @@ import ConfirmationDialog from "../components/ConfirmationDialog";
 import SimpleSnackbar from "../components/Snackbar";
 import { MESSAGES } from "../utils/messages";
 import { useUser } from "../context/user/UserProvider";
+import Breadcrum from "../components/Breadcrum";
 
 const useStyles: any = makeStyles({
   buttons: {
@@ -110,6 +111,7 @@ const SubCategory = () => {
           margin: "3%",
         }}
       >
+        <Breadcrum page="Subcategory" />
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Box sx={{ mr: 2 }}>
             <Button
