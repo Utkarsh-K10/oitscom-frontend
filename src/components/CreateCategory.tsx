@@ -6,6 +6,8 @@ import {
   DialogActions,
   Button,
   FormHelperText,
+  FormControl,
+  Grid,
 } from "@mui/material";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useUser } from "../context/user/UserProvider";
@@ -34,7 +36,7 @@ const CreateCategory = ({ closeDialog, detail }: any) => {
 
   return (
     <div>
-      <Dialog open={true}>
+      <Dialog open={true} fullWidth maxWidth="sm">
         <DialogTitle>
           {detail.id ? "Edit Category" : " Create Category"}
         </DialogTitle>
@@ -51,20 +53,26 @@ const CreateCategory = ({ closeDialog, detail }: any) => {
             <>
               <DialogContent>
                 <Form>
-                  <Field
-                    type="text"
-                    name="name"
-                    as={TextField}
-                    variant="standard"
-                    label="Category"
-                    required
-                    id="name"
-                  />
-                  {errors && touched && (
-                    <FormHelperText style={{ color: "red" }}>
-                      <ErrorMessage name="name" component="div" />
-                    </FormHelperText>
-                  )}
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} md={12}>
+                      <FormControl fullWidth>
+                        <Field
+                          type="text"
+                          name="name"
+                          component={TextField}
+                          variant="outlined"
+                          label="Category"
+                          required
+                          id="name"
+                        />
+                      </FormControl>
+                      {errors && touched && (
+                        <FormHelperText style={{ color: "red" }}>
+                          <ErrorMessage name="name" component="div" />
+                        </FormHelperText>
+                      )}
+                    </Grid>
+                  </Grid>
                 </Form>
               </DialogContent>
               <DialogActions>

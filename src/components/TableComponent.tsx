@@ -156,11 +156,12 @@ const TableComponent = ({
               onChange={(e: any) => {
                 const { value } = e.target;
                 if (value.length) {
-                  const output = rows.filter((item: any) =>
-                    item.name
+                  const output = rows?.filter((item: any) =>
+                    item?.name
                       .toLowerCase()
                       .includes(e.target.value.toLowerCase())
                   );
+                  console.log({ output });
                   setFilterRow(output);
                 } else {
                   setFilterRow([]);

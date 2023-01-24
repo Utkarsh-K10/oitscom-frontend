@@ -1,6 +1,9 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useReducer } from "react";
-import { SET_SUB_CATEGORY } from "../../actions/Category.Actions";
+import {
+  POST_SUB_CATEGORY,
+  SET_SUB_CATEGORY,
+} from "../../actions/Category.Actions";
 import { API } from "../../constants/baseUrl";
 import CategoryReducer from "../../reducers/CategoryReducer";
 
@@ -23,11 +26,43 @@ export const CategoryContextProvider = ({ children }: any) => {
     }
   };
 
-  const handleCreateSubCategory = (subCategory: any) => {};
+  const handleCreateSubCategory = async (subCategory: any) => {
+    try {
+      console.log("created", subCategory);
+      const { data } = await axios.post(`${API}/subcategory`, {
+        ...subCategory,
+      });
+      if (data) {
+        await fetchSubCategory();
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+  };
 
-  const handleUpdateSubCategory = (id: number, value: any) => {};
+  const handleUpdateSubCategory = async (id: number, value: any) => {
+    try {
+      const { data } = await axios.patch(`${API}/subcategory/${id}`, {
+        ...value,
+      });
+      if (data?.affected) {
+        await fetchSubCategory();
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+  };
 
-  const handleDeleteSubCategory = (id: number) => {};
+  const handleDeleteSubCategory = async (id: number) => {
+    try {
+      const { data } = await axios.delete(`${API}/subcategory/${id}`);
+      if (data?.affected) {
+        await fetchSubCategory();
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+  };
 
   useEffect(() => {
     fetchSubCategory();
