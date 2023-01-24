@@ -9,35 +9,38 @@ import {
 } from "@mui/material";
 import { useUser } from "../context/user/UserProvider";
 
-const ConfirmationDialog = ({ closeDialog, category }: any) => {
-  const { handleDeleteCategory }: any = useUser();
+const ConfirmationDialog = ({
+  closeDialog,
+  detail,
+  dialogtext,
+  confirmtext,
+  denytext,
+  onClose,
+}: any) => {
+  console.log({ detail });
   return (
     <Dialog
       open={true}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
+      maxWidth="sm"
     >
       <DialogTitle id="alert-dialog-title">Please Confirm</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          {
-            <>
-              Are you sure you want to Delete{" "}
-              <span style={{ fontWeight: "bold" }}>{category.name}</span>{" "}
-            </>
-          }
+          {dialogtext}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={closeDialog}>No</Button>
+        <Button onClick={closeDialog}>{denytext}</Button>
         <Button
           onClick={() => {
-            handleDeleteCategory(category.id);
+            onClose(detail.id);
             closeDialog();
           }}
           autoFocus
         >
-          Yes
+          {confirmtext}
         </Button>
       </DialogActions>
     </Dialog>

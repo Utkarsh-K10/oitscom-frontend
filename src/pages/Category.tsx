@@ -23,7 +23,7 @@ const Category = () => {
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const { categories, handleDeleteCategory }: any = useUser();
   const [showConfirmation, setShowConfirmation]: any = useState(false);
-  const [selectedData, setSelectedData] = useState({});
+  const [selectedData, setSelectedData]: any = useState({});
   const [isEdit, setIsEdit] = useState(false);
   const classes = useStyles();
 
@@ -133,7 +133,11 @@ const Category = () => {
       {showConfirmation && (
         <ConfirmationDialog
           closeDialog={() => setShowConfirmation(false)}
-          category={selectedData}
+          detail={selectedData}
+          dialogtext={`Are you sure you want to delete ${selectedData.name}`}
+          confirmtext="Yes"
+          denytext="No"
+          onClose={handleDeleteCategory}
         />
       )}
     </>

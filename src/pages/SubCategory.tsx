@@ -8,6 +8,7 @@ import { makeStyles } from "@mui/styles";
 import { downloadCSV } from "../utils/utilService";
 import CreateSubCategory from "../components/CreateSubCategory";
 import { useState } from "react";
+import ConfirmationDialog from "../components/ConfirmationDialog";
 
 const useStyles: any = makeStyles({
   buttons: {
@@ -21,9 +22,10 @@ const SubCategory = () => {
   const { subCategories, handleDeleteSubCategory }: any = useCategory();
   const classes = useStyles();
   const [showSubCategory, setShowSubCategory] = useState(false);
-  const [selectedData, setSelectedData] = useState({});
+  const [selectedData, setSelectedData]: any = useState({});
   const [isSelected, setIsSelected] = useState(false);
-
+  const [showConfirmation, setShowConfirmation]: any = useState(false);
+  console.log({ selectedData });
   const SUB_CATEGORY_TABLE_HEAD = [
     {
       id: "sname",
@@ -72,7 +74,8 @@ const SubCategory = () => {
           <Box
             sx={{ color: "text.secondary" }}
             onClick={() => {
-              handleDeleteSubCategory(subCategory?.id);
+              setSelectedData(subCategory);
+              setShowConfirmation(true);
             }}
           >
             <DeleteIcon className={classes.buttons} />
@@ -134,12 +137,16 @@ const SubCategory = () => {
           detail={isSelected ? selectedData : {}}
         />
       )}
-      {/* {showConfirmation && (
+      {showConfirmation && (
         <ConfirmationDialog
           closeDialog={() => setShowConfirmation(false)}
-          category={selectedData}
+          detail={selectedData}
+          dialogtext={`Are you sure you want to delete ${selectedData?.name}`}
+          confirmtext="Yes"
+          denytext="No"
+          onClose={handleDeleteSubCategory}
         />
-      )} */}
+      )}
     </>
   );
 };
