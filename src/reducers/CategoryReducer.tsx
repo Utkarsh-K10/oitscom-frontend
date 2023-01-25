@@ -1,5 +1,6 @@
 import {
   POST_SUB_CATEGORY,
+  SET_COLORS,
   SET_SUB_CATEGORY,
 } from "../actions/Category.Actions";
 
@@ -12,6 +13,8 @@ const CategoryReducer = (state: any, action: any) => {
         ...state,
         subCategories: [...state.subCategories, action.payload],
       };
+    case SET_COLORS:
+      return { ...state, colors: action.payload };
     default:
       return "Nothing found";
   }

@@ -2,6 +2,7 @@ import axios from "axios";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import {
   POST_SUB_CATEGORY,
+  SET_COLORS,
   SET_SUB_CATEGORY,
 } from "../../actions/Category.Actions";
 import { API } from "../../constants/baseUrl";
@@ -12,6 +13,7 @@ const CategoryContext = createContext({});
 const initialState = {
   isLoading: false,
   subCategories: [],
+  colors: [],
 };
 
 export const CategoryContextProvider = ({ children }: any) => {
@@ -64,8 +66,51 @@ export const CategoryContextProvider = ({ children }: any) => {
     }
   };
 
+  const fetchColors = async () => {
+    try {
+      const { data } = await axios.get(`${API}/colors`);
+      dispatch({ type: SET_COLORS, payload: data });
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+  const handleCreateColor = async (value: any) => {
+    try {
+      const { data } = await axios.post(`${API}/colors`, value);
+      if (data) {
+        await fetchColors();
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+  const handleUpdateColor = async (id: number, value: any) => {
+    try {
+      const { data } = await axios.patch(`${API}/colors/${id}`, value);
+      if (data?.affected) {
+        await fetchColors();
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+  const handleDeleteColor = async (id: number) => {
+    try {
+      const { data } = await axios.delete(`${API}/${id}`);
+      if (data?.affected) {
+        await fetchColors();
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
   useEffect(() => {
     fetchSubCategory();
+    fetchColors();
   }, []);
 
   return (
@@ -75,6 +120,8 @@ export const CategoryContextProvider = ({ children }: any) => {
         handleCreateSubCategory,
         handleDeleteSubCategory,
         handleUpdateSubCategory,
+        handleCreateColor,
+        handleUpdateColor,
       }}
     >
       {children}

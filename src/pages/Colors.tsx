@@ -6,13 +6,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { makeStyles } from "@mui/styles";
 import { downloadCSV } from "../utils/utilService";
-import CreateSubCategory from "../components/CreateSubCategory";
 import { useState } from "react";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import SimpleSnackbar from "../components/Snackbar";
 import { MESSAGES } from "../utils/messages";
 import { useUser } from "../context/user/UserProvider";
 import Breadcrum from "../components/Breadcrum";
+import CreateColor from "../components/CreateColor";
 
 const useStyles: any = makeStyles({
   buttons: {
@@ -22,27 +22,23 @@ const useStyles: any = makeStyles({
   },
 });
 
-const SubCategory = () => {
-  const { subCategories, handleDeleteSubCategory }: any = useCategory();
+const Colors = () => {
+  const { colors, handleDeleteColor }: any = useCategory();
   const classes = useStyles();
-  const [showSubCategory, setShowSubCategory] = useState(false);
+  const [showColor, setShowColor] = useState(false);
   const [selectedData, setSelectedData]: any = useState({});
   const [isSelected, setIsSelected] = useState(false);
   const [showConfirmation, setShowConfirmation]: any = useState(false);
   const { dispatchSnackBar }: any = useUser();
 
-  const SUB_CATEGORY_TABLE_HEAD = [
+  console.log({ colors });
+
+  const COLOR_TABLE_HEAD = [
     {
-      id: "sname",
+      id: "name",
       numeric: false,
       disablePadding: false,
-      label: "SubCategory",
-    },
-    {
-      id: "cname",
-      numeric: false,
-      disablePadding: false,
-      label: "Category",
+      label: "Color Name",
     },
     {
       id: "edit",
@@ -58,19 +54,18 @@ const SubCategory = () => {
     },
   ];
 
-  const getSubCategories = () =>
-    subCategories.map((subCategory: any) => {
+  const getColors = () => {
+    return colors?.map((color: any) => {
       return {
-        name: subCategory?.name,
-        cname: subCategory?.category.name,
+        name: color?.name,
         edit: (
           <Box
             sx={{ color: "text.secondary" }}
             onClick={(e: any) => {
               e.stopPropagation();
-              setShowSubCategory(true);
+              setShowColor(true);
               setIsSelected(true);
-              setSelectedData({ subCategory });
+              setSelectedData({ color });
             }}
           >
             <EditIcon className={classes.buttons} />
@@ -81,7 +76,7 @@ const SubCategory = () => {
             sx={{ color: "text.secondary" }}
             onClick={(e: any) => {
               e.stopPropagation();
-              setSelectedData(subCategory);
+              setSelectedData(color);
               setShowConfirmation(true);
             }}
           >
@@ -90,17 +85,10 @@ const SubCategory = () => {
         ),
       };
     });
+  };
 
   const handleDownload = () => {
-    const exportData = subCategories.map((subCategory: any) => {
-      return {
-        id: subCategory?.id,
-        s_name: subCategory?.name,
-        c_name: subCategory?.category?.name,
-      };
-    });
-    downloadCSV(exportData, "SubCategory.csv");
-    dispatchSnackBar(MESSAGES("File").downlaod);
+    console.log("Hello");
   };
 
   return (
@@ -127,22 +115,22 @@ const SubCategory = () => {
           <Button
             variant="contained"
             onClick={() => {
-              setShowSubCategory(true);
+              setShowColor(true);
               setIsSelected(false);
             }}
           >
-            Create Sub Category
+            Create Color
           </Button>
         </Box>
         <TableComponent
-          title="Sub Category Table For Category"
-          headcells={SUB_CATEGORY_TABLE_HEAD}
-          rows={getSubCategories()}
+          title="Colors Table"
+          headcells={COLOR_TABLE_HEAD}
+          rows={getColors()}
         />
       </div>
-      {showSubCategory && (
-        <CreateSubCategory
-          closeDialog={() => setShowSubCategory(false)}
+      {showColor && (
+        <CreateColor
+          closeDialog={() => setShowColor(false)}
           detail={isSelected ? selectedData : {}}
         />
       )}
@@ -153,11 +141,11 @@ const SubCategory = () => {
           dialogtext={`Are you sure you want to delete ${selectedData?.name}`}
           confirmtext="Yes"
           denytext="No"
-          onClose={handleDeleteSubCategory}
+          onClose={handleDeleteColor}
         />
       )}
     </>
   );
 };
 
-export default SubCategory;
+export default Colors;

@@ -105,6 +105,14 @@ function Layout() {
                 <Typography>Sub Category</Typography>
               </Box>
             </MenuItem>
+            <MenuItem routerLink={<Link to="/colors" />}>
+              <Box sx={{ display: "flex", justifyContent: "baseline" }}>
+                <div style={{ color: "#2980b9", marginRight: "5px" }}>
+                  <ClassIcon />
+                </div>
+                <Typography>Colors</Typography>
+              </Box>
+            </MenuItem>
           </Menu>
         </Sidebar>
       </div>
