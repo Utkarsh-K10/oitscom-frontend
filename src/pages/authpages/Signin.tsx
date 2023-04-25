@@ -20,17 +20,17 @@ const Signin: React.FC = () => {
         <Grid direction={"column"} container alignItems="center" justifyContent="center">
             <h2>Signup Form</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Grid item >
+                <Grid  item xs={6} md={8} >
                     <label>First Name</label>
                     <input type={"text"} id="firstname" {...register("firstname")} />
                 </Grid>
-                <Grid>
+                <Grid  item xs={6} md={8}>
                     <label>Family Name</label>
                     <input type={"text"} id="lastname" {...register("lastname")}/>
-                </Grid>
+                </Grid >
                     <label>Email</label>
                     <input type={"email"} id="email" {...register("email")}/>
-                <Grid>
+                <Grid  item xs={6} md={8}>
                     <label>Password</label>
                     <input type={"password"} id="password" {...register("password")} />
                 </Grid>
