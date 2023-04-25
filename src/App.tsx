@@ -8,6 +8,7 @@ import { useUser } from "./context/user/UserProvider";
 import Category from "./pages/Category";
 import SubCategory from "./pages/SubCategory";
 import Colors from "./pages/Colors";
+import Signin from "./pages/authpages/Signin";
 
 function App() {
   const { isAdminPresent }: any = useUser();
@@ -34,7 +35,8 @@ function App() {
         {!isUserPresent ? (
           <Routes>
             <Route path="/" element={<Signup />} />
-            <Route path="/signin" element={<Signup />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin/>}/>
           </Routes>
         ) : (
           <>
